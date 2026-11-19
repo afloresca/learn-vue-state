@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "title": "Vue.js 3 Official Guide",
+    "image": "https://vuejs.org/images/logo.png",
+    "description": "Complete guide to Vue 3 with Composition API and script setup.",
+    "type": "documentation",
+    "tags": [
+      "frontend"
+    ],
+    "url": "https://vuejs.org/guide/introduction.html",
+    "progress": 75,
+    "learningNotes": [
+      {
+        "id": 1,
+        "content": "Composition API is the recommended approach for new projects.",
+        "createdAt": "2026-08-01T10:00:00.000Z"
+      }
+    ],
+    "createdAt": "2026-08-01T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "title": "JavaScript.info",
+    "image": "https://javascript.info/img/sitetoolbar__logo_en.svg",
+    "description": "Detailed JavaScript tutorial covering fundamentals to advanced topics.",
+    "type": "article",
+    "tags": [
+      "frontend"
+    ],
+    "url": "https://javascript.info/",
+    "progress": 40,
+    "learningNotes": [],
+    "createdAt": "2026-08-02T11:30:00.000Z"
+  },
+  {
+    "id": 3,
+    "title": "Node.js Design Patterns",
+    "image": "https://nodejs.org/static/images/logo-hexagon-card.png",
+    "description": "Best practices and patterns for building scalable Node.js applications.",
+    "type": "book",
+    "tags": [
+      "backend"
+    ],
+    "url": "https://www.nodejsdesignpatterns.com/",
+    "progress": 20,
+    "learningNotes": [],
+    "createdAt": "2026-08-03T09:15:00.000Z"
+  },
+  {
+    "id": 4,
+    "title": "TypeScript for Beginners",
+    "image": "https://www.typescriptlang.org/images/branding/two-longform.svg",
+    "description": "Beginner-friendly course on TypeScript fundamentals and tooling.",
+    "type": "course",
+    "tags": [
+      "frontend"
+    ],
+    "url": "https://www.typescriptlang.org/docs/",
+    "progress": 60,
+    "learningNotes": [
+      {
+        "id": 2,
+        "content": "Interfaces are great for defining object shapes.",
+        "createdAt": "2026-08-04T14:20:00.000Z"
+      },
+      {
+        "id": 3,
+        "content": "Strict mode helps catch errors early.",
+        "createdAt": "2026-08-05T08:45:00.000Z"
+      }
+    ],
+    "createdAt": "2026-08-04T14:20:00.000Z"
+  },
+  {
+    "id": 5,
+    "title": "Docker and Kubernetes Complete Course",
+    "image": "https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png",
+    "description": "Full video course covering containers and orchestration.",
+    "type": "video",
+    "tags": [
+      "devops"
+    ],
+    "url": "https://www.docker.com/",
+    "progress": 0,
+    "learningNotes": [],
+    "createdAt": "2026-08-05T16:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "title": "CSS Tricks Flexbox Guide",
+    "image": "https://css-tricks.com/wp-content/uploads/2019/06/akqRGyta_400x400.jpg",
+    "description": "Visual guide to CSS Flexbox with examples and cheatsheets.",
+    "type": "article",
+    "tags": [
+      "frontend"
+    ],
+    "url": "https://css-tricks.com/snippets/css/a-guide-to-flexbox/",
+    "progress": 100,
+    "learningNotes": [
+      {
+        "id": 4,
+        "content": "justify-content aligns along the main axis.",
+        "createdAt": "2026-08-06T12:10:00.000Z"
+      }
+    ],
+    "createdAt": "2026-08-06T12:10:00.000Z"
+  },
+  {
+    "id": 7,
+    "title": "MongoDB University M220JS",
+    "image": "https://www.mongodb.com/assets/images/global/leaf.png",
+    "description": "Course on data modeling and performance with MongoDB and Node.js.",
+    "type": "course",
+    "tags": [
+      "backend"
+    ],
+    "url": "https://university.mongodb.com/",
+    "progress": 10,
+    "learningNotes": [],
+    "createdAt": "2026-08-07T07:50:00.000Z"
+  },
+  {
+    "id": 8,
+    "title": "Web Accessibility Fundamentals",
+    "image": "https://www.w3.org/assets/logos/w3c-2025/svg/w3c.svg",
+    "description": "Guide to building accessible web applications.",
+    "type": "documentation",
+    "tags": [
+      "frontend"
+    ],
+    "url": "https://www.w3.org/WAI/fundamentals/",
+    "progress": 30,
+    "learningNotes": [],
+    "createdAt": "2026-08-07T19:25:00.000Z"
+  }
+]
