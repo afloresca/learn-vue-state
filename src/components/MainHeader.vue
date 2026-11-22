@@ -3,7 +3,7 @@ export default {
   name: 'MainHeader',
   data() {
     return {
-      name: 'Your Name',
+      name: 'César Flores Carrera',
     };
   },
 };

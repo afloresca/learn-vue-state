@@ -3,6 +3,7 @@ import MainHeader from '@/components/MainHeader.vue';
 import FilterBar from '@/components/FilterBar.vue';
 import ResourceList from '@/components/ResourceList.vue';
 import SearchBox from '@/components/SearchBox.vue';
+import DialogModal from '@/components/DialogModal.vue';
 import resourcesData from '@/data/resources.json';
 
 export default {
@@ -12,12 +13,14 @@ export default {
     FilterBar,
     ResourceList,
     SearchBox,
+    DialogModal
   },
   data() {
     return {
       resources: resourcesData,
+      show: false,
     };
-  },
+  }
 };
 </script>
 
@@ -27,10 +30,18 @@ export default {
     <div class="main-grid__top">
       <SearchBox />
       <button type="button" class="button button--secondary">Reset filters</button>
-      <button type="button" class="button">New Resource</button>
+      <button type="button" class="button" @click="show = true">New Resource</button>
     </div>
     <FilterBar class="main-grid__filterbar" />
     <ResourceList class="main-grid__resource-list" :resource-list="resources" />
+    <DialogModal v-if="show" v-model:show="show" >
+      <template #header>
+        TODO: Header for the new resource modal, it has to control if it's new or editing an existing resource.
+      </template>
+      <template #body>
+         TODO: Implement the form for the new resource.
+      </template>
+    </DialogModal> //v-if will ensure the modal is only rendered when 'show' is true
   </main>
 </template>
 
