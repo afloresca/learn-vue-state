@@ -5,6 +5,10 @@ export default {
     show: {
       type: Boolean,
       required: true
+    },
+    title: {
+      type: Object,
+      required: true
     }
   },
   methods: {
@@ -19,7 +23,7 @@ export default {
     <div v-if="show" @click.self="close" class="modal">
         <div id="content" class="modal__content">
             <div id="header" class="modal__header">
-                <slot name="header"></slot>  <!-- to place anything here ??-->
+                <slot name="header"><h2>{{ title.text }}</h2></slot>  <!-- to place anything here ??-->
                 <button class="modal__close" @click="close">X</button>
             </div>
             <div id="body" class="modal__body">

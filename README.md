@@ -17,9 +17,11 @@ In this PEC, we will address the management of states and events of the componen
 
 This new component works like a regular modal. It occupies the entire screen and has a background that blurs the other underlying elements. It also includes a card in the center of the screen with the following elements: 
 
-● Header. The component that implements it can insert any type of element. It also includes an X button that closes the modal when clicked. 
++ Header. The component that implements it can insert any type of element. It also includes an X button that closes the modal when clicked. 
 
-● Body. The component that implements it can also insert any type of element into it. ● Background. Clicking it closes it, just like clicking the X button. 
++ Body. The component that implements it can also insert any type of element into it. 
+
++ Background. Clicking it closes it, just like clicking the X button. 
 
 The DialogModal component should not be rendered by default to avoid impacting application performance, so it must have a system in place so that it can be mounted/unmounted by the parent. 
 
@@ -35,23 +37,25 @@ ResourceFormIt is an expanded version of the ResourceCard component. It displays
 
 This component can be accessed in two ways: 
 
-● By clicking on a ResourceCard, it loads all the item's information into the corresponding form fields. 
++ By clicking on a ResourceCard, it loads all the item's information into the corresponding form fields. 
 
-● By clicking on the “New resource” button next to the search box (explained in the next section). 
++ By clicking on the “New resource” button next to the search box (explained in the next section). 
 
 It has the following characteristics: 
 
-● If the form is opened from a card, it displays all the resource information. 
++ If the form is opened from a card, it displays all the resource information. 
 
-● If you open the form by clicking the “New resource” button, all fields will be empty. ● The Save button allows you to edit an existing resource or add a new resource when the form is opened via “New resource”. 
++ If you open the form by clicking the “New resource” button, all fields will be empty. 
 
-● A system for creating and deleting notes using the NoteList component must be enabled, as shown in the screenshot. The array of objects defined earlier must be created correctly; that is, the “id” and “content” properties. 
++ The Save button allows you to edit an existing resource or add a new resource when the form is opened via “New resource”. 
 
-● It includes a button to delete a card (see next section). 
++ A system for creating and deleting notes using the NoteList component must be enabled, as shown in the screenshot. The array of objects defined earlier must be created correctly; that is, the “id” and “content” properties. 
 
-● Since this component is also a form, all information must be placed within the form inputs in a semantic way. 
++ It includes a button to delete a card (see next section). 
 
-● The image shown at the top of the card comes from the image field, and is edited in real time by being replaced with another image URL. 
++ Since this component is also a form, all information must be placed within the form inputs in a semantic way. 
+
++ The image shown at the top of the card comes from the image field, and is edited in real time by being replaced with another image URL. 
 
 | *Note* |
 | :--- |
@@ -72,7 +76,7 @@ When you click the create button, the following should be done:
 
 - Divide the contents of the "tags" field using commas and store the resulting values in an array. 
 
-- Create an object using the form data in the correct format for each property. ● Emit the event that allows adding the new item to the list. 
+- Create an object using the form data in the correct format for each property. + Emit the event that allows adding the new item to the list. 
 
 - Clear the form fields and close the modal. 
 

@@ -19,6 +19,9 @@ export default {
     return {
       resources: resourcesData,
       show: false,
+      title: {
+        text: 'New Resource'
+      }
     };
   }
 };
@@ -34,10 +37,7 @@ export default {
     </div>
     <FilterBar class="main-grid__filterbar" />
     <ResourceList class="main-grid__resource-list" :resource-list="resources" />
-    <DialogModal v-if="show" v-model:show="show" >
-      <template #header>
-        TODO: Header for the new resource modal, it has to control if it's new or editing an existing resource.
-      </template>
+    <DialogModal v-if="show" v-model:show="show" :title="title" >
       <template #body>
          TODO: Implement the form for the new resource.
       </template>
