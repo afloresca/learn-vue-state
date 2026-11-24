@@ -1,12 +1,17 @@
 <script>
+import ResourceForm from './ResourceForm.vue';
+
 export default {
   name: 'DialogModal',
+  components: {
+    ResourceForm
+  },
   props: {
     show: {
       type: Boolean,
       required: true
     },
-    title: {
+    form: {
       type: Object,
       required: true
     }
@@ -14,6 +19,9 @@ export default {
   methods: {
     close() {
       this.$emit('update:show', false);
+    },
+    save(data) {
+      this.$emit('save', data);
     }
   }
 }
@@ -23,13 +31,17 @@ export default {
     <div v-if="show" @click.self="close" class="modal">
         <div id="content" class="modal__content">
             <div id="header" class="modal__header">
-                <slot name="header"><h2>{{ title.text }}</h2></slot>  <!-- to place anything here ??-->
+                <slot name="header"><h2>{{ form.title }}</h2></slot>  <!-- to place anything here ??-->
                 <button class="modal__close" @click="close">X</button>
             </div>
             <div id="body" class="modal__body">
-                <slot name="body"></slot> <!-- Here goes the content of the modal.-->
-                <button @click="close" class="button">Close</button>
+                <slot name="body"><ResourceForm :form="form" @save="save"/></slot> <!-- Here goes the content of the modal.-->
+
             </div>
+            <div class="modal__body">
+               <button @click="close" class="button">Close</button>
+            </div>
+
         </div>
     </div>
   </Teleport>

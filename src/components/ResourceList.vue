@@ -12,12 +12,18 @@ export default {
       required: true,
     },
   },
+  emits: ['select-resource'],
+  methods: {
+    selectResource(resource) {
+      this.$emit('select-resource', resource);
+    }
+  }
 };
 </script>
 
 <template>
   <ul class="resource-list">
-    <li v-for="resource in resourceList" :key="resource.id">
+    <li v-for="resource in resourceList" :key="resource.id" @click="selectResource(resource)">
       <ResourceCard :resource="resource" />
     </li>
   </ul>

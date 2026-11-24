@@ -1,17 +1,112 @@
 <script>
+import NoteList from './NoteList.vue';
+
 export default {
   name: 'ResourceForm',
+  components: {NoteList},
   props: {
-    Form: {
+    form: {
       type: Object,
       required: true
     }
+  },
+  data() {
+    return {
+      localForm: {
+        ...this.form  //copy all properties from the form prop into the localForm object with ... spread syntax
+        },
+      error: '',
+      showNotes: false
+    };
+  },
+  methods: {
+    validateForm() {
+      this.error = ''; // Reset errors before validation
+      if (!this.localForm.title) {
+        this.error = 'Title is required';
+      }
+      if (!this.localForm.image) {
+        this.error = 'image is required';
+      }
+      if (!this.localForm.description) {
+        this.error = 'Description is required';
+      }
+      if (!this.localForm.type) {
+        this.error = 'Article is required';
+      }
+      if (!this.localForm.url) {
+        this.error = 'URL is required';
+      }
+      return this.error === '';
+    },
+    save(){
+      if (!this.validateForm(this.localForm)) {
+          return;
+      }
+      this.$emit('save', {
+          ...(this.localForm)
+      });
+    },
+    openNotes() {
+      this.showNotes = true;
+    }
   }
 }
+
+
 </script>
 <template>
   <div class="resource-form">
-    {{ Form }}
+    <img v-if="localForm.image" :src="localForm.image" alt="Resource image" class="resource-form__image" />
+    <div class="resource-form__container">
+      <div class="resource-form__group">
+        <label class="resource-form__label" for="title">Title</label>
+        <input class="resource-form__input" id="title" v-model="localForm.title" placeholder="Enter title" />
+      </div>
+      <div class="resource-form__group">
+        <label class="resource-form__label" for="image">Image URL</label>
+        <input class="resource-form__input" id="image" v-model="localForm.image" placeholder="Enter image URL" />
+      </div>
+      <div class="resource-form__group resource-form__group--full">
+        <label class="resource-form__label" for="description">Description</label>
+        <textarea class="resource-form__textarea" id="description" v-model="localForm.description" placeholder="Enter description"></textarea>
+      </div>
+      <div class="resource-form__group">
+        <label class="resource-form__label" for="type">Article</label>
+        <input class="resource-form__input" id="type" v-model="localForm.type" placeholder="article" />
+      </div>
+      <div class="resource-form__group">
+        <label class="resource-form__label" for="tags">Tags</label>
+        <input class="resource-form__input" id="tags" v-model="localForm.tags" placeholder="Enter tags" />
+      </div>
+      <div class="resource-form__group resource-form__group--full">
+        <label class="resource-form__label" for="url">URL</label>
+        <input class="resource-form__input" id="url" v-model="localForm.url" placeholder="Enter URL" />
+      </div>
+      <div class="resource-form__group resource-form__group--full">
+        <label class="resource-form__label" for="progress">Progress {{ localForm.progress }}%</label>
+      </div>
+      <div class="resource-form__group resource-form__group--full">
+        <input type="range" id="min-progress" min="0" max="100" v-model="localForm.progress" />
+      </div>
+
+      <div class="resource-form__group--full">
+        <label class="resource-form__label" for="notes">Notes</label>
+        <div class="resource-form__notes-controls">
+          <input class="resource-form__input" id="notes" v-model="localForm.notes" placeholder="Enter notes" />
+          <button type="button" class="button" @click="openNotes"> Add Note</button>
+        </div>
+      </div>
+
+      <div class="resource-form__group resource-form__actions">
+        <button class="button" @click="save">Save</button>
+        <button class="button resource-form__btn--cancel">Delete</button>
+      </div>
+    </div>
+    <div v-if="error" class="resource-form__error">
+      {{ error }}
+    </div>
+    <NoteList v-if="showNotes" :notes="localForm.learningNotes" />
   </div>
 </template>
 <style scoped>
@@ -122,6 +217,13 @@ export default {
   .resource-form__group--full {
     grid-column: auto;
   }
+}
+
+/** añadimos css para que el botón de añadir nota se vea bien a la izquierda y el input ocupe el resto del espacio */   
+.resource-form__notes-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
 }
 
 </style>

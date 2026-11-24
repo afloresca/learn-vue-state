@@ -19,10 +19,49 @@ export default {
     return {
       resources: resourcesData,
       show: false,
-      title: {
-        text: 'New Resource'
-      }
+      form: {}
     };
+  },
+  methods: {
+    resetForm() {
+      this.form = {
+        id: null,
+        title: '',
+        image: '',
+        description: '',
+        type: '',
+        tags: [],
+        url: '',
+        progress: 0,
+        createdAt: '',
+        learningNotes: []
+      };
+    },
+    fillForm(data) {
+      this.form = data;
+      this.show = true;
+    },
+    createResource() {
+      this.resetForm();
+      this.form.title = 'New Resource';
+      this.show = true;
+    },
+    save(data){
+      if (data.id){
+        const index = this.resources.findIndex(r => r.id === data.id);
+        if (index !== -1) {
+          this.resources.splice(index, 1, data);
+        }
+      } else {
+        const newResource = {
+          ...data,
+          id: crypto.randomUUID(),
+          createdAt: new Date().toISOString()
+        };
+        this.resources.push(newResource);
+      }
+      this.show = false;
+    }
   }
 };
 </script>
@@ -33,15 +72,13 @@ export default {
     <div class="main-grid__top">
       <SearchBox />
       <button type="button" class="button button--secondary">Reset filters</button>
-      <button type="button" class="button" @click="show = true">New Resource</button>
+      <button type="button" class="button" @click="createResource">New Resource</button>
     </div>
     <FilterBar class="main-grid__filterbar" />
-    <ResourceList class="main-grid__resource-list" :resource-list="resources" />
-    <DialogModal v-if="show" v-model:show="show" :title="title" >
-      <template #body>
-         TODO: Implement the form for the new resource.
-      </template>
-    </DialogModal> //v-if will ensure the modal is only rendered when 'show' is true
+    <ResourceList class="main-grid__resource-list" :resource-list="resources" @select-resource="fillForm"
+    />
+    <DialogModal v-if="show" v-model:show="show" :form="form" @save="save">
+    </DialogModal> <!-- v-if will ensure the modal is only rendered when 'show' is true -->
   </main>
 </template>
 
