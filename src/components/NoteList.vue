@@ -6,15 +6,44 @@ export default {
       type: Array,
       required: true
     }
+  },
+  data() {
+    return {
+      localList: [...this.notes],  //copy of the notes array
+      newNote: ''
+    };
+  },
+  methods: {
+    addNote() {
+      if (this.newNote.trim() !== '') {
+        this.localList.push({ 
+          id: crypto.randomUUID(),
+          content: this.newNote,
+          createdAt: new Date()
+         });
+        this.newNote = '';
+        this.$emit('update_notes', this.localList);
+      }
+    }
   }
 }
 </script>
 <template>
+
   <div class="note-list">
-    <div v-for="(note, index) in notes" :key="index" class="note-list__item">
-      {{ note }}
+    <div class="note-list__input-group">
+      <input class="note-list__input" type="text" v-model="newNote" placeholder="Add a note"/>
+      <button type="button" class="button" @click="addNote">Add Note</button>
+    </div>
+
+      <div class="note-list__items">
+        <div v-for="(note, index) in localList" :key="index" class="note-list__item">
+          <span class="note-list__content">{{ note.content }}</span>
+          <button type="button" class="note-list__delete" @click="localList.splice(index, 1); $emit('update_notes', localList)  ">×</button>
+        </div>
     </div>
   </div>
+
 </template>
 
 <style scoped>

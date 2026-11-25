@@ -19,7 +19,16 @@ export default {
     return {
       resources: resourcesData,
       show: false,
-      form: {}
+      form: {},
+      filters: {
+        sortBy: 'alphabetical',
+        orderBy: 'ascending',
+        type: '',
+        tag: '',
+        minProgress: 0
+      },
+      query: '',
+      allResources: resourcesData
     };
   },
   methods: {
@@ -60,6 +69,79 @@ export default {
         };
         this.resources.push(newResource);
       }
+      this.allResources = this.resources;  //save the updated list of all resources
+      this.show = false;
+    },
+
+    searchItem() {
+      if (!this.query) {
+       return;
+      }
+      this.resources = this.resources ? this.resources.filter(resource => resource.title.toLowerCase().includes(this.query.toLowerCase())) : [];
+    },
+
+    resetFilters() {
+      this.resources = this.allResources;
+      this.query = '';
+      this.$refs.searchBox.setQuery('');
+      this.$refs.filterBar.resetFilters();
+    },
+
+
+
+    sortBy(filteredResources) {
+      switch (this.filters.sortBy) {
+        case 'alphabetical':
+          filteredResources = filteredResources.sort((a, b) => a.title.localeCompare(b.title));
+          break;
+        case 'createdAt':
+          filteredResources = filteredResources.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+          break;
+        case 'progress':
+          filteredResources = filteredResources.sort((a, b) => a.progress - b.progress);
+          break;
+      }
+      //by default the order is ascending, if orderBy is 'descending' we reverse the array
+      if (this.filters.orderBy === 'descending') {
+        filteredResources = filteredResources.reverse();
+      }
+      return filteredResources;     
+    },
+
+    applyFilters() {
+      // Apply the filters to the resources
+      let filteredResources = this.allResources;
+      if (this.filters.type) {
+        filteredResources = filteredResources.filter(r => r.type.toLocaleLowerCase() === this.filters.type.toLocaleLowerCase());
+      }
+      if (this.filters.tag) {
+        filteredResources = filteredResources.filter(r => r.tags.toLocaleLowerCase().includes(this.filters.tag.toLocaleLowerCase()));
+      }
+      if (this.filters.minProgress) {
+        filteredResources = filteredResources.filter(r => r.progress >= this.filters.minProgress);
+      }
+      this.resources =  this.sortBy(filteredResources); //now let's apply the order
+    },
+
+    updateList() {
+      this.applyFilters();
+      this.searchItem()
+    },
+
+    setQuery(query) {
+      this.query = query;
+      this.updateList();
+    },
+
+    setFilters(filters) {
+      this.filters = filters;
+      this.updateList();
+    },
+
+      // Handle the delete event from the dialog modal
+    deleteResource(resource) {
+      this.resources = this.resources.filter(r => r.id !== resource.id); //remove it from anywhere
+      this.allResources = this.allResources.filter(r => r.id !== resource.id);
       this.show = false;
     }
   }
@@ -70,14 +152,14 @@ export default {
   <MainHeader />
   <main class="main-grid">
     <div class="main-grid__top">
-      <SearchBox />
-      <button type="button" class="button button--secondary">Reset filters</button>
+      <SearchBox ref="searchBox" @search="setQuery($event)"/>
+      <button type="button" class="button button--secondary" @click="resetFilters">Reset filters</button>
       <button type="button" class="button" @click="createResource">New Resource</button>
     </div>
-    <FilterBar class="main-grid__filterbar" />
+    <FilterBar ref="filterBar" class="main-grid__filterbar"  @resetFilters="resetFilters" @update-filters="setFilters($event)"/>
     <ResourceList class="main-grid__resource-list" :resource-list="resources" @select-resource="fillForm"
     />
-    <DialogModal v-if="show" v-model:show="show" :form="form" @save="save">
+    <DialogModal v-if="show" v-model:show="show" :form="form" @save="save" @deleteResource="deleteResource">
     </DialogModal> <!-- v-if will ensure the modal is only rendered when 'show' is true -->
   </main>
 </template>

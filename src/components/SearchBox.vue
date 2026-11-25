@@ -1,11 +1,22 @@
 <script>
 export default {
   name: 'SearchBox',
+  data() {
+    return {
+      searchQuery: ''
+    };
+  },
+  methods: {
+    setQuery(value) {
+      this.searchQuery = value;
+      this.$emit('search', value);
+    }
+  }
 };
 </script>
 
 <template>
-  <input class="search-box" type="text" placeholder="Search resources..." value="" />
+  <input class="search-box" type="text" placeholder="Search resources..." v-model="searchQuery" @input="$emit('search', searchQuery)" />
 </template>
 
 <style scoped>

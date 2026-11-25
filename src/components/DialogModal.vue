@@ -6,6 +6,7 @@ export default {
   components: {
     ResourceForm
   },
+  emits: ['update:show', 'save', 'deleteResource'],  //I've added this because there was a warning on my web browser about missing emits ??
   props: {
     show: {
       type: Boolean,
@@ -22,6 +23,10 @@ export default {
     },
     save(data) {
       this.$emit('save', data);
+    },
+    deleteResource(data) {
+      console.log(`Deleting resource with id: ${data.id}`);
+      this.$emit('deleteResource', data);
     }
   }
 }
@@ -35,7 +40,7 @@ export default {
                 <button class="modal__close" @click="close">X</button>
             </div>
             <div id="body" class="modal__body">
-                <slot name="body"><ResourceForm :form="form" @save="save"/></slot> <!-- Here goes the content of the modal.-->
+                <slot name="body"><ResourceForm :form="form" @save="save" @delete="deleteResource" /></slot> <!-- Here goes the content of the modal.-->
 
             </div>
             <div class="modal__body">

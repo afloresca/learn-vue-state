@@ -20,16 +20,45 @@ export default {
         { value: 'descending', label: 'Descending' },
       ],
       tagOptions: ['frontend', 'backend', 'devops'],
-    };
+
+    filters: {
+      sortBy: 'alphabetical',
+      orderBy: 'ascending',
+      type: '',
+      tag: '',
+      minProgress: 0
+    }
+  };
   },
+    methods: {
+      resetFilters() {
+        this.filters = {
+          sortBy: 'alphabetical',
+          orderBy: 'ascending',
+          type: '',
+          tag: '',
+          minProgress: 0
+        };
+      },
+    },
+  // Here I just wanted to use watchers to test them ref.(https://vuejs.org/guide/essentials/watchers.html) -->
+  watch: {
+    filters: {
+      handler(newVal) {
+        this.$emit('update-filters', newVal);
+      },
+      deep: true // must watch deep to react to any nested mutation
+    }
+  }
 };
 </script>
 
 <template>
   <form class="filter">
-    <div class="filter__field">
+    <!-- Filter fields, let's do the binding to filters with v-model -->
+    <div class="filter__field">      
       <label for="sort-by" class="filter__label">Sort by:</label>
-      <select id="sort-by" class="filter__select" value="alphabetical">
+      <select id="sort-by" class="filter__select" v-model="filters.sortBy">
         <option v-for="option in sortByOptions" :key="option.value" :value="option.value">
           {{ option.label }}
         </option>
@@ -38,7 +67,7 @@ export default {
 
     <div class="filter__field">
       <label for="order-by" class="filter__label">Order by:</label>
-      <select id="order-by" class="filter__select" value="ascending">
+      <select id="order-by" class="filter__select" v-model="filters.orderBy">
         <option v-for="option in orderByOptions" :key="option.value" :value="option.value">
           {{ option.label }}
         </option>
@@ -47,7 +76,7 @@ export default {
 
     <div class="filter__field">
       <label for="type" class="filter__label">Type:</label>
-      <select id="type" class="filter__select" value="">
+      <select id="type" class="filter__select" v-model="filters.type">
         <option value="">All</option>
         <option v-for="option in typeOptions" :key="option.value" :value="option.value">
           {{ option.label }}
@@ -57,7 +86,7 @@ export default {
 
     <div class="filter__field">
       <label for="tag" class="filter__label">Tag:</label>
-      <select id="tag" class="filter__select" value="">
+      <select id="tag" class="filter__select" v-model="filters.tag">
         <option value="">All</option>
         <option v-for="option in tagOptions" :key="option" :value="option">
           {{ option }}
@@ -66,9 +95,9 @@ export default {
     </div>
 
     <div class="filter__field">
-      <label for="min-progress" class="filter__label">Min progress: 0%</label>
+      <label for="min-progress" class="filter__label">Min progress: {{ filters.minProgress }}%</label>
       <div class="filter__range-wrap">
-        <input type="range" id="min-progress" class="filter__range" min="0" max="100" value="0" />
+        <input type="range" id="min-progress" class="filter__range" min="0" max="100" v-model="filters.minProgress" />
       </div>
     </div>
   </form>

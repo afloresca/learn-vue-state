@@ -16,7 +16,7 @@ export default {
         ...this.form  //copy all properties from the form prop into the localForm object with ... spread syntax
         },
       error: '',
-      showNotes: false
+      tagsList: (this.form.tags || []).join(', '),
     };
   },
   methods: {
@@ -43,13 +43,23 @@ export default {
       if (!this.validateForm(this.localForm)) {
           return;
       }
+      this.updateTagsList();
       this.$emit('save', {
           ...(this.localForm)
       });
     },
-    openNotes() {
-      this.showNotes = true;
+    //Just deleteit!
+    deleteResource(){
+      this.$emit('delete', { ...this.localForm }); //emit delete event with the resource id
+    },
+    //convert to array of trimmed tags and remove empty strings
+    updateTagsList() {
+      this.localForm.tags = this.tagsList
+        .split(',')
+        .map(tag => tag.trim()) 
+        .filter(Boolean); //remove empty strings after trimming
     }
+
   }
 }
 
@@ -77,7 +87,7 @@ export default {
       </div>
       <div class="resource-form__group">
         <label class="resource-form__label" for="tags">Tags</label>
-        <input class="resource-form__input" id="tags" v-model="localForm.tags" placeholder="Enter tags" />
+        <input class="resource-form__input" id="tags" v-model="tagsList" placeholder="Enter tags, separated by commas" />
       </div>
       <div class="resource-form__group resource-form__group--full">
         <label class="resource-form__label" for="url">URL</label>
@@ -92,21 +102,21 @@ export default {
 
       <div class="resource-form__group--full">
         <label class="resource-form__label" for="notes">Notes</label>
+
         <div class="resource-form__notes-controls">
-          <input class="resource-form__input" id="notes" v-model="localForm.notes" placeholder="Enter notes" />
-          <button type="button" class="button" @click="openNotes"> Add Note</button>
+           <NoteList :notes="localForm.learningNotes" @update_notes="localForm.learningNotes = $event" />
         </div>
+
       </div>
 
       <div class="resource-form__group resource-form__actions">
         <button class="button" @click="save">Save</button>
-        <button class="button resource-form__btn--cancel">Delete</button>
+        <button class="button resource-form__btn--cancel" @click="deleteResource">Delete</button>
       </div>
     </div>
     <div v-if="error" class="resource-form__error">
       {{ error }}
     </div>
-    <NoteList v-if="showNotes" :notes="localForm.learningNotes" />
   </div>
 </template>
 <style scoped>
