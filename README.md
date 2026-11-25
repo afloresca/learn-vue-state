@@ -1,5 +1,5 @@
 # Project 3 learn-vue-state
-This is part of CAT3.
+This is part of CAT3. And I think I have fulfilled all the requeriments. Bellow there is a copy of the requirement statements. I Have tried to use watchers, v-modal, emit and teleport to prove my knowledge. Sure the code could be better.
 
 # Requirements
 In this PEC, we will address the management of states and events of the components created in the previous task. In summary, the functionality we will implement is as follows: Our application data resides in App.vue**,** therefore, **we need to create a form** that emits an event with the information of the created item so that it can be captured by the App component and then the list of items can be updated, instead of using sample values. 
